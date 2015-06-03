@@ -5,12 +5,86 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>MyApp</title>
   <link rel="stylesheet" href="css/text" href="main.css">
-  <script type="text/javascript" src="test.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script type="text/javascript" src="js/fullstackapp.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">MyApp</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+     <!--  <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> -->
+      <ul class="nav navbar-nav navbar-right">
+      <p class="navbar-text">MyAppPage</p>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Edit Profile</a></li>
+            <li><a href="#">Upload New Image</a></li>
+            <li><a href="#">View My Gallery</a></li>
+            <li><a href="#">Logout</a></li>
+            <!-- <li class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
 </head>
 <body>
+  <div class="login">
+  <!-- <input id="name" type="text" value="" placeholder="name">
+  <input id="email" type="text" value="" placeholder="e-mail"> -->
+    <input id="username" type="text" value="" placeholder="username">
+    <input id="password" type="password" value="" placeholder="password">
+    <input id="get-token" type="button" value="login">
+    <br>
+    <label for="token">Token:</label>
+    <input id="token" placeholder="empty">
+    <br>
+    <label for="id">Id:</label>
+    <input id="id" type="text" placeholder="">
+    <input id="get-by-id" type="button" value="Get By Id">
+    <input id="get-index" type="button" value="Get Index">
+    <br>
+    <label for="result">Result:</label>
+    <input id="result" placeholder="empty">
+  </div>
 
 </body>
 </html>
