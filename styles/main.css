@@ -1,0 +1,15 @@
+.navbar-inverse .navbar-text {
+  margin-right: 460px;
+}
+
+#new-user {
+  display: none;
+}
+
+#new-picture {
+  display: none;
+}
+
+#login-user {
+  display: none;
+}
