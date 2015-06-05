@@ -1,15 +1,61 @@
 $(document).ready(function(){
-  $('#register-user').on("click", function(event){
-    $('#new-user').show();
-  })
+  $("#register-user").on("click", function(event){
+    $("#new-user").show();
+  });
 
-  $('#login').on("click", function(event){
-    $('#login-user').show();
-  })
+  $("#login").on("click", function(event){
+    $("#login-user").show();
+  });
 
-  $('#upload-picture').on("click", function(event){
-    $('#new-picture').show();
-  })
+  $("#upload-picture").on("click", function(event){
+    $("#new-picture").show();
+  });
+
+  $("#new-user-button").on("click", function(event){
+    var newUser = {
+      name: $("#new-user-name").val(),
+      email: $("#new-user-email").val(),
+      username: $("#new-user-username").val(),
+      password: $("#new-user-password").val(),
+      password_confirmation: $("#new-user-password-confirmation").val()
+    };
+
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/register',
+      data: {credentials: newUser}
+    })
+    .done(function(response){
+      $("#new-user").hide();
+    });
+  });
+
+  $("#login-button").on("click", function(){
+    var username = $("#returning-username").val();
+    var password = $("#returning-password").val();
+    var params = {
+        credentials: {
+          username: username,
+          password: password
+        }
+      };
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/login',
+      dataType: "json",
+      data: params
+    })
+    .done(function(data){
+      $("#login-user").hide();
+      renderUserData(data);
+    })
+    .fail(function(error) {
+      console.log('error in login' + error);
+    });
+  });
+  var renderUserData = function (data) {
+    $("#userDiv").html("Hello, " + data.name);
+  };
 
   $.ajax({
     method: 'GET',
@@ -19,7 +65,7 @@ $(document).ready(function(){
     console.log(user_data);
     user_data.forEach(function(user){
       $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
-    })
+    });
 
   })
   .fail(function(){
@@ -39,7 +85,7 @@ $(document).ready(function(){
       var picturesList = user_data.pictures;
       picturesList.forEach(function(index) {
         console.log(index.picture);
-        var html = "<dl id='current_user' data-current-user='" + user_data.id + "' ><dt>name</dt><dd>" + user_data.name + '</dd><dt>pictures</dt><dd><img src="' + index.picture + '"/>' + user_data.picture_count + "</dd></dl>"
+        var html = "<dl id='current_user' data-current-user='" + user_data.id + "' ><dt>name</dt><dd>" + user_data.name + '</dd><dt>pictures</dt><dd><img src="' + index.picture + '"/>' + user_data.picture_count + "</dd></dl>";
         $("#user").append(html);
       });
 
@@ -85,28 +131,6 @@ $(document).ready(function(){
  // };
 
  // selectDiv('new-user-button');
-
-
-  $("#new-user-button").on("click", function(event){
-    var newUser = {
-      name: $('#new-user-name').val(),
-      email: $('#new-user-email').val(),
-      password: $('#new-user-password').val(),
-      password_confirmation: $('#new-user-password-confirmation').val()
-    };
-
-    $.ajax({
-      method: 'POST',
-      url: 'http://localhost:3000/register',
-      data: {credentials: newUser}
-    })
-    .done(function(response){
-      debugger;
-      $('#new-user').hide();
-  //       console.log('Created a new user');
-  //      newUser.append("<li id='" + user.id + "'>" + user.name + "</li>");
-    });
-  });
 
 });
 
