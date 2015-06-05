@@ -11,6 +11,8 @@ $(document).ready(function(){
     $("#new-picture").show();
   });
 
+
+
   $("#new-user-button").on("click", function(event){
     var newUser = {
       name: $("#new-user-name").val(),
@@ -47,7 +49,12 @@ $(document).ready(function(){
     })
     .done(function(data){
       $("#login-user").hide();
+
+      // set the token in the hidden input field
+      $('#token').val(data.token);
+
       renderUserData(data);
+      getUserPictures(data.id);
     })
     .fail(function(error) {
       console.log('error in login' + error);
@@ -57,21 +64,21 @@ $(document).ready(function(){
     $("#userDiv").html("Hello, " + data.name);
   };
 
-  $.ajax({
-    method: 'GET',
-    url: 'http://localhost:3000/users'
-  })
-  .done(function(user_data){
-    console.log(user_data);
-    user_data.forEach(function(user){
-      $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
-    });
+  // $.ajax({
+  //   method: 'GET',
+  //   url: 'http://localhost:3000/users'
+  // })
+  // .done(function(user_data){
+  //   console.log(user_data);
+  //   user_data.forEach(function(user){
+  //     $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
+  //   });
 
-  })
-  .fail(function(){
-    console.log("failed when going to get all user data");
-    alert("failed");
-  });
+  // })
+  // .fail(function(){
+  //   console.log("failed when going to get all user data");
+  //   alert("failed");
+  // });
 
   $("#users").on("click", function(event){
     alert("clicked " + event.target.id);
@@ -119,6 +126,28 @@ $(document).ready(function(){
 
   });
 
+  function getUserPictures(userID){
+
+  $.ajax({
+    method: 'GET',
+    url: 'http://localhost:3000/users/' + userID + '/pictures',
+    dataType: 'json',
+    headers: { Authorization: 'Token token=' + $("#token").val() }
+
+  })
+  .done(function(userPictures){
+    console.log('user pictures success')
+    debugger;
+
+    userPictures.forEach(function(picture){
+      var imgTag = "<img src='" + picture.picture + "'></img>";
+      $('#pictures').append("<li>" + imgTag + "</li>");
+    })
+  });
+}
+
+});
+
     // *** To hide and show different things
  //  var selectDiv = function(divName) {
  //    var allDivs = ['users', 'new-picture'];
@@ -131,9 +160,6 @@ $(document).ready(function(){
  // };
 
  // selectDiv('new-user-button');
-
-});
-
 // //jquery authenticate and get
 // $(function(){
 //   $('#login').on('click', function(){
