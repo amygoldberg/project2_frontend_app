@@ -35,9 +35,9 @@
           <ul class="dropdown-menu" role="menu">
             <li><a id="register-user" href="#">Create your account</a></li>
             <li><a id="login" href="#">Login</a></li>
-            <li><a href="#">Edit Profile</a></li>
+            <!-- <li><a href="#">Edit Profile</a></li> -->
             <li><a id="upload-picture" href="#">Upload New Image</a></li>
-            <li><a href="#">View My Gallery</a></li>
+            <!-- li><a href="#">View My Gallery</a></li> -->
             <li><a href="#">Logout</a></li>
           </ul>
         </li>
@@ -48,9 +48,6 @@
 
 </head>
 <body>
-
-  <ul id="pictures">
-  </ul>
 
   <div id="user">
   </div>
@@ -82,6 +79,8 @@
   Image: <input id="new-pic" type="file" name="image" data-url='http:localhost:3000/pictures' value="" placeholder="New Picture">
   <button id="new-pic-button">Upload New</button>
   </div>
+
+  <ul id="pictures"></ul>
 
   <input id="token" type="hidden" name="" value=""></input>
 

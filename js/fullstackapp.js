@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  var userIdSpecial;
+
   $("#register-user").on("click", function(event){
     $("#new-user").show();
   });
@@ -10,8 +12,6 @@ $(document).ready(function(){
   $("#upload-picture").on("click", function(event){
     $("#new-picture").show();
   });
-
-
 
   $("#new-user-button").on("click", function(event){
     var newUser = {
@@ -53,32 +53,14 @@ $(document).ready(function(){
       // set the token in the hidden input field
       $('#token').val(data.token);
 
-      renderUserData(data);
+      // renderUserData(data);
       getUserPictures(data.id);
+      userIdSpecial = data.id;
     })
     .fail(function(error) {
       console.log('error in login' + error);
     });
   });
-  var renderUserData = function (data) {
-    $("#userDiv").html("Hello, " + data.name);
-  };
-
-  // $.ajax({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/users'
-  // })
-  // .done(function(user_data){
-  //   console.log(user_data);
-  //   user_data.forEach(function(user){
-  //     $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
-  //   });
-
-  // })
-  // .fail(function(){
-  //   console.log("failed when going to get all user data");
-  //   alert("failed");
-  // });
 
   $("#users").on("click", function(event){
     alert("clicked " + event.target.id);
@@ -108,46 +90,71 @@ $(document).ready(function(){
     fd.append('image', $("#new-pic")[0].files[0]);
     fd.append('comment', $("#new-pic-comment").val());
 
-    var currentUserID = $('#current_user').data('current-user');
-    console.log('creating picture for user with an id of ' + currentUserID);
+    // var currentUserID = $('#current_user').data('current-user');
+    console.log('creating picture for user with an id of ' + userIdSpecial);
 
     $.ajax({
       method: 'POST',
+      headers: { Authorization: 'Token token=' + $("#token").val() },
       processData: false,
       contentType: false,
       cache: false,
-      url: 'http://localhost:3000/users/' + currentUserID + '/pictures',
+      url: 'http://localhost:3000/users/' + userIdSpecial + '/pictures',
       data: fd
     })
     .done(function(){
       console.log('Added picture');
       alert('Added picture');
-    });
+    })
+    .fail(function(error,textStatus, errorThrown){
+      console.log('error in login' + error + textStatus + errorThrown);
+          console.log($('#token').val());
+
+      });
 
   });
 
+  var renderUserData = function (data) {
+    $("#userDiv").html("Hello, " + data.name);
+  };
+
   function getUserPictures(userID){
 
-  $.ajax({
-    method: 'GET',
-    url: 'http://localhost:3000/users/' + userID + '/pictures',
-    dataType: 'json',
-    headers: { Authorization: 'Token token=' + $("#token").val() }
+    $.ajax({
+      method: 'GET',
+      url: 'http://localhost:3000/users/' + userID + '/pictures',
+      dataType: 'json',
+      headers: { Authorization: 'Token token=' + $("#token").val() }
 
-  })
-  .done(function(userPictures){
-    console.log('user pictures success')
-    debugger;
-
-    userPictures.forEach(function(picture){
-      var imgTag = "<img src='" + picture.picture + "'></img>";
-      $('#pictures').append("<li>" + imgTag + "</li>");
+    })
+    .done(function(userPictures){
+      userPictures.forEach(function(picture){
+        var imgTag = "<img src='" + picture.picture + "'></img>";
+        $('#pictures').append("<li>" + imgTag + "</li>");
     })
   });
 }
 
 });
 
+// INDEX USER ACTION
+  // $.ajax({
+  //   method: 'GET',
+  //   url: 'http://localhost:3000/users'
+  // })
+  // .done(function(user_data){
+  //   console.log(user_data);
+  //   user_data.forEach(function(user){
+  //     $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
+  //   });
+
+  // })
+  // .fail(function(){
+  //   console.log("failed when going to get all user data");
+  //   alert("failed");
+  // });
+
+// HIDE AND SHOW ACTIONS
     // *** To hide and show different things
  //  var selectDiv = function(divName) {
  //    var allDivs = ['users', 'new-picture'];
@@ -159,6 +166,7 @@ $(document).ready(function(){
  //   console.log("showing " + divName);
  // };
 
+// AUTHENTICATION
  // selectDiv('new-user-button');
 // //jquery authenticate and get
 // $(function(){
