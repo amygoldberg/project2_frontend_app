@@ -1,6 +1,8 @@
 $(document).ready(function(){
   // var userIdSpecial;
 
+  if (simpleStorage.get('token')) {getUserPictures();}
+
   $("#register-user").on("click", function(event){
     $("#login-user").hide();
     $("#new-user").show();
@@ -52,11 +54,16 @@ $(document).ready(function(){
     .done(function(data){
       $("#login-user").hide();
 
+      simpleStorage.set("token", data.token, {TTL: 43200000})
+
       // set the token in the hidden input field
-      $('#token').val(data.token);
+      // $('#token').val(data.token);
 
       renderUserData(data);
       getUserPictures(data.id);
+
+      // var html = "<dl id='current_user' data-current-user='" + data.id + "' ><dt>name</dt><dd>" + data.name + '</dd><dt>pictures</dt><dd>'  + data.picture_count + "</dd></dl>";
+      //   $("#user").append(html);
       // userIdSpecial = data.id;
     })
     .fail(function(error) {
@@ -69,58 +76,57 @@ $(document).ready(function(){
     $.ajax({
       method: 'DELETE',
       url: "http://localhost:3000/logout",
-      headers: { Authorization: 'Token token=' + $("#token").val() },
-      // headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     })
     .done(function(){
-      console.log("logged out");
+      console.log("user logged out");
     })
     .fail(function(){
       alert("Error in logging out");
     }).always(function(){
-      $("#token").val("");
+      simpleStorage.set('token', '');
       // toggle();
     });
   });
 
-  $.ajax({
-    method: 'GET',
-    url: 'http://localhost:3000/users'
-  })
-  .done(function(user_data){
-    console.log(user_data);
-    user_data.forEach(function(user){
-      $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
-    });
+  // $.ajax({
+  //   method: 'GET',
+  //   url: 'http://localhost:3000/users'
+  // })
+  // .done(function(user_data){
+  //   console.log(user_data);
+  //   user_data.forEach(function(user){
+  //     $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
+  //   });
 
-  })
-  .fail(function(){
-    console.log("failed when going to get all user data");
-    alert("failed");
-  });
+  // })
+  // .fail(function(){
+  //   console.log("failed when going to get all user data");
+  //   alert("failed");
+  // });
 
-  $("#users").on("click", function(event){
-    alert("clicked " + event.target.id);
-    $.ajax({
-      method: 'GET',
-      url: 'http://localhost:3000/users/' + event.target.id
-    })
-    .done(function(user_data){
-      console.log(user_data);
-      $("#user").html("");
-      var picturesList = user_data.pictures;
-      picturesList.forEach(function(index) {
-        console.log(index.picture);
-        var html = "<dl id='current_user' data-current-user='" + user_data.id + "' ><dt>name</dt><dd>" + user_data.name + '</dd><dt>pictures</dt><dd><img src="' + index.picture + '"/>' + user_data.picture_count + "</dd></dl>";
-        $("#user").append(html);
-      });
+  // $("#users").on("click", function(event){
+  //   alert("clicked " + event.target.id);
+  //   $.ajax({
+  //     method: 'GET',
+  //     url: 'http://localhost:3000/users/' + event.target.id
+  //   })
+  //   .done(function(user_data){
+  //     console.log(user_data);
+  //     $("#user").html("");
+  //     var picturesList = user_data.pictures;
+  //     picturesList.forEach(function(index) {
+  //       console.log(index.picture);
+  //       var html = "<dl id='current_user' data-current-user='" + user_data.id + "' ><dt>name</dt><dd>" + user_data.name + '</dd><dt>pictures</dt><dd><img src="' + index.picture + '"/>' + user_data.picture_count + "</dd></dl>";
+  //       $("#user").append(html);
+  //     });
 
-    })
-    .fail(function(){
-      alert("failed");
-    });
+  //   })
+  //   .fail(function(){
+  //     alert("failed");
+  //   });
 
-  });
+  // });
 
   $("#new-pic-button").on("click", function(event){
     var fd = new FormData();
@@ -132,11 +138,11 @@ $(document).ready(function(){
 
     $.ajax({
       method: 'POST',
-      headers: { Authorization: 'Token token=' + $("#token").val() },
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       processData: false,
       contentType: false,
       cache: false,
-      url: 'http://localhost:3000/users/' + currentUserID + '/pictures', //userIdSpecial
+      url: 'http://localhost:3000/pictures', //userIdSpecial
       data: fd
     })
     .done(function(){
@@ -159,9 +165,10 @@ $(document).ready(function(){
 
     $.ajax({
       method: 'GET',
-      url: 'http://localhost:3000/users/' + userID + '/pictures',
+      url: 'http://localhost:3000/pictures',
+      // url: 'http://localhost:3000/users/' + userID + '/pictures',
       dataType: 'json',
-      headers: { Authorization: 'Token token=' + $("#token").val() }
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
 
     })
     .done(function(userPictures){
