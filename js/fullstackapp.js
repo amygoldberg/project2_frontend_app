@@ -1,12 +1,14 @@
 $(document).ready(function(){
-  var userIdSpecial;
+  // var userIdSpecial;
 
   $("#register-user").on("click", function(event){
+    $("#login-user").hide();
     $("#new-user").show();
   });
 
   $("#login").on("click", function(event){
     $("#login-user").show();
+    $("#new-user").hide();
   });
 
   $("#upload-picture").on("click", function(event){
@@ -53,13 +55,48 @@ $(document).ready(function(){
       // set the token in the hidden input field
       $('#token').val(data.token);
 
-      // renderUserData(data);
+      renderUserData(data);
       getUserPictures(data.id);
-      userIdSpecial = data.id;
+      // userIdSpecial = data.id;
     })
     .fail(function(error) {
       console.log('error in login' + error);
     });
+  });
+
+  // FROM COURTNEY
+  $("#logout-user").on("click", function(){
+    $.ajax({
+      method: 'DELETE',
+      url: "http://localhost:3000/logout",
+      headers: { Authorization: 'Token token=' + $("#token").val() },
+      // headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+    })
+    .done(function(){
+      console.log("logged out");
+    })
+    .fail(function(){
+      alert("Error in logging out");
+    }).always(function(){
+      $("#token").val("");
+      // toggle();
+    });
+  });
+
+  $.ajax({
+    method: 'GET',
+    url: 'http://localhost:3000/users'
+  })
+  .done(function(user_data){
+    console.log(user_data);
+    user_data.forEach(function(user){
+      $("#users").append("<li id='" + user.id + "'>" + user.name + "</li>");
+    });
+
+  })
+  .fail(function(){
+    console.log("failed when going to get all user data");
+    alert("failed");
   });
 
   $("#users").on("click", function(event){
@@ -90,8 +127,8 @@ $(document).ready(function(){
     fd.append('image', $("#new-pic")[0].files[0]);
     fd.append('comment', $("#new-pic-comment").val());
 
-    // var currentUserID = $('#current_user').data('current-user');
-    console.log('creating picture for user with an id of ' + userIdSpecial);
+    var currentUserID = $('#current_user').data('current-user');
+    console.log('creating picture for user with an id of ' + currentUserID); // userIdSpecial
 
     $.ajax({
       method: 'POST',
@@ -99,7 +136,7 @@ $(document).ready(function(){
       processData: false,
       contentType: false,
       cache: false,
-      url: 'http://localhost:3000/users/' + userIdSpecial + '/pictures',
+      url: 'http://localhost:3000/users/' + currentUserID + '/pictures', //userIdSpecial
       data: fd
     })
     .done(function(){
