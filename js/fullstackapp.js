@@ -9,24 +9,36 @@ $(document).ready(function(){
     $("#new-picture").hide();
     $("#userDiv").hide();
     $("#pictures").hide();
+    $("#upload-picture").hide();
+    $("#logout-user").hide();
   })
 
   $("#register-user").on("click", function(event){
     $("#login-user").hide();
     $("#new-user").show();
+    // $("#register-user").hide();
+
   });
 
   $("#login").on("click", function(event){
     $("#login-user").show();
-    $("#new-user").hide();
+    // $("#new-user").hide();
+    $("#register-user").hide();
+    $("#login").hide();
+    // $("#upload-picture").hide();
   });
 
   $("#upload-picture").on("click", function(event){
     $("#new-picture").show();
+    $("#new-pic-button").show();
+    // $("#register-user").hide();
+    // $("#login").hide();
+    // $("#upload-picture").hide();
   });
 
   $("new-pic-button").on("click", function(event){
     $("#new-pic-button").hide();
+    $("#new-picture").hide();
   })
 
   $("#logout-user").on("click", function(event){
@@ -36,6 +48,8 @@ $(document).ready(function(){
     $("#userDiv").hide();
     $("#pictures").hide();
     $("#new-pic-button").hide();
+    $("#register-user").show();
+    $("#login").show();
   })
 
   $("#new-user-button").on("click", function(event){
@@ -172,7 +186,7 @@ $(document).ready(function(){
     })
     .done(function(){
       // console.log('Added picture');
-
+      $("#new-picture").hide();
       $("#pictures").empty();
       getUserPictures();
     })
