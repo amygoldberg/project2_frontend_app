@@ -25,9 +25,17 @@ $(document).ready(function(){
     $("#new-picture").show();
   });
 
+  $("new-pic-button").on("click", function(event){
+    $("#new-pic-button").hide();
+  })
+
   $("#logout-user").on("click", function(event){
+    $("#login-user").hide();
+    $("#new-user").hide();
+    $("#new-picture").hide();
     $("#userDiv").hide();
     $("#pictures").hide();
+    $("#new-pic-button").hide();
   })
 
   $("#new-user-button").on("click", function(event){
@@ -46,6 +54,10 @@ $(document).ready(function(){
     })
     .done(function(response){
       $("#new-user").hide();
+
+      simpleStorage.set("token", data.token, {TTL: 43200000})
+      renderUserData();
+      getUserPictures();
     });
   });
 
@@ -159,9 +171,10 @@ $(document).ready(function(){
       data: fd
     })
     .done(function(){
-      console.log('Added picture');
+      // console.log('Added picture');
 
-      getUserPictures(data.id);
+      $("#pictures").empty();
+      getUserPictures();
     })
     .fail(function(error,textStatus, errorThrown){
       console.log('error in login' + error + textStatus + errorThrown);
