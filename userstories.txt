@@ -1,0 +1,5 @@
+## User Story 1: User go can to the homepage and create a new account.
+
+## User Story 2: User can go to the homepage and sign into an existing account.
+
+## User Story 3: User can upload a new image to their photo gallery, with a comment/description.
