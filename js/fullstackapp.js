@@ -3,6 +3,14 @@ $(document).ready(function(){
 
   if (simpleStorage.get('token')) {getUserPictures();}
 
+  $("#home").on("click", function(event){
+    $("#login-user").hide();
+    $("#new-user").hide();
+    $("#new-picture").hide();
+    $("#userDiv").hide();
+    $("#pictures").hide();
+  })
+
   $("#register-user").on("click", function(event){
     $("#login-user").hide();
     $("#new-user").show();
@@ -16,6 +24,11 @@ $(document).ready(function(){
   $("#upload-picture").on("click", function(event){
     $("#new-picture").show();
   });
+
+  $("#logout-user").on("click", function(event){
+    $("#userDiv").hide();
+    $("#pictures").hide();
+  })
 
   $("#new-user-button").on("click", function(event){
     var newUser = {
@@ -147,7 +160,8 @@ $(document).ready(function(){
     })
     .done(function(){
       console.log('Added picture');
-      alert('Added picture');
+
+      getUserPictures(data.id);
     })
     .fail(function(error,textStatus, errorThrown){
       console.log('error in login' + error + textStatus + errorThrown);
@@ -158,7 +172,7 @@ $(document).ready(function(){
   });
 
   var renderUserData = function (data) {
-    $("#userDiv").html("Hello, " + data.name);
+    $("#userDiv").html("welcome back, " + data.name);
   };
 
   function getUserPictures(userID){
@@ -209,55 +223,3 @@ $(document).ready(function(){
  //   $('#' + divName).show();
  //   console.log("showing " + divName);
  // };
-
-// AUTHENTICATION
- // selectDiv('new-user-button');
-// //jquery authenticate and get
-// $(function(){
-//   $('#login').on('click', function(){
-//     $.ajax('http://localhost:3000/login',{
-//       contentType: 'application/json',
-//       processData: false,
-//       data: JSON.stringify({
-//         credentials: {
-//           // name: $('#name').val(),
-//           // email: $('#email').val(),
-//           username: $('#username').val(),
-//           password: $('#password').val()
-//         }
-//       }),
-//       dataType: "json",
-//       method: "POST"
-//     }).done(function(data, textStatus) {
-//       $('#token').val(textStatus == 'nocontent' ? 'login failed' : data['token']);
-//       console.log(data);
-//     }).fail(function(jqxhr, textStatus, errorThrown){
-//       console.log(textStatus);
-//     });
-//   });
-//   $('#get-index').on('click', function(){
-//     $.ajax('http://localhost:3000/hello',{
-//       dataType: "json",
-//       method: "GET",
-//       headers: { Authorization: 'Token token=' + $("#token").val() }
-//     }).done(function(data, textStatus) {
-//       $('#result').val(JSON.stringify(data));
-//       console.log(data);
-//     }).fail(function(jqxhr, textStatus, errorThrown){
-//       console.log(textStatus);
-//     });
-//   });
-//   $('#get-by-id').on('click', function(){
-//     $.ajax('http://localhost:3000/hello/' +
-//       $('#id').val(), {
-//       dataType: "json",
-//       method: "GET",
-//       headers: { Authorization: 'Token token=' + $("#token").val() }
-//     }).done(function(data, textStatus) {
-//       $('#result').val(JSON.stringify(data));
-//       console.log(data);
-//     }).fail(function(jqxhr, textStatus, errorThrown){
-//       console.log(textStatus);
-//     });
-//   });
-// });
