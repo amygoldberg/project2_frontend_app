@@ -11,12 +11,16 @@ $(document).ready(function(){
     $("#pictures").hide();
     $("#upload-picture").hide();
     $("#logout-user").hide();
+    $("#welcome").show();
+    $("#hero-image").show();
   })
 
   $("#register-user").on("click", function(event){
     $("#login-user").hide();
     $("#new-user").show();
     // $("#register-user").hide();
+    $("#welcome").hide();
+    $("#hero-image").hide();
 
   });
 
@@ -26,6 +30,8 @@ $(document).ready(function(){
     $("#register-user").hide();
     $("#login").hide();
     // $("#upload-picture").hide();
+    $("#welcome").hide();
+    $("#hero-image").hide();
   });
 
   $("#upload-picture").on("click", function(event){
