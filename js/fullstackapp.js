@@ -205,7 +205,7 @@ $(document).ready(function() {
       processData: false,
       contentType: false,
       cache: false,
-      url: baseURL, //userIdSpecial
+      url: baseURL(), //userIdSpecial
       data: fd
     })
       .done(function() {
