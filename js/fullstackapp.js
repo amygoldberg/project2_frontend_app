@@ -134,7 +134,7 @@ $(document).ready(function() {
   $("#logout-user").on("click", function() {
     $.ajax({
       method: 'DELETE',
-      url: baseURL + '/logout',
+      url: baseURL() + '/logout',
       headers: {
         Authorization: 'Token token=' + simpleStorage.get('token')
       }
@@ -230,7 +230,7 @@ $(document).ready(function() {
 
     $.ajax({
       method: 'GET',
-      url: baseURL,
+      url: baseURL(),
       // url: 'http://localhost:3000/users/' + userID + '/pictures',
       dataType: 'json',
       headers: {
