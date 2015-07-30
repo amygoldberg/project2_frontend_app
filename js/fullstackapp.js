@@ -233,11 +233,9 @@ $(document).ready(function() {
   };
 
   function getUserPictures(userID) {
-
     $.ajax({
       method: 'GET',
-      url: baseURL(),
-      // url: 'http://localhost:3000/users/' + userID + '/pictures',
+      url: baseURL() + '/users/' + userID + '/pictures',
       dataType: 'json',
       headers: {
         Authorization: 'Token token=' + simpleStorage.get('token')
