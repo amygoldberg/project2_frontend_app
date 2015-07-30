@@ -106,8 +106,10 @@ $(document).ready(function() {
       method: 'POST',
       url: baseURL() + '/login',
       dataType: "json",
-      data: credentials: {
-        params
+      data: {
+        credentials: {
+          params
+        }
       }
     })
       .done(function(data) {
