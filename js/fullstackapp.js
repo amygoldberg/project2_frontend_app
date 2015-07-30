@@ -106,11 +106,7 @@ $(document).ready(function() {
       method: 'POST',
       url: baseURL() + '/login',
       dataType: "json",
-      data: {
-        credentials: {
-          params
-        }
-      }
+      data: params
     })
       .done(function(data) {
         $("#login-user").hide();
