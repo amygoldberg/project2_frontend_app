@@ -82,7 +82,7 @@ $(document).ready(function() {
         credentials: newUser
       }
     })
-      .done(function(response) {
+      .done(function(data) {
         $("#new-user").hide();
 
         simpleStorage.set("token", data.token, {
