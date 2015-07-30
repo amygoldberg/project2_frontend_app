@@ -230,7 +230,7 @@ $(document).ready(function() {
 
     $.ajax({
       method: 'GET',
-      url: baseURL(),
+      url: baseURL() + '/users/' + userID + '/pictures',
       // url: 'http://localhost:3000/users/' + userID + '/pictures',
       dataType: 'json',
       headers: {
