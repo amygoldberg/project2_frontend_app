@@ -115,6 +115,10 @@ $(document).ready(function() {
           TTL: 43200000
         })
 
+        simpleStorage.set("userID", data.id, {
+          TTL: 43200000
+        })
+
         // set the token in the hidden input field
         // $('#token').val(data.token);
 
@@ -196,6 +200,8 @@ $(document).ready(function() {
 
     var currentUserID = $('#current_user').data('current-user');
     console.log('creating picture for user with an id of ' + currentUserID); // userIdSpecial
+
+    var userID = simpleStorage.get("userID");
 
     $.ajax({
       method: 'POST',
