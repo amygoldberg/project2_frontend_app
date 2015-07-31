@@ -13,7 +13,7 @@ $(document).ready(function() {
 
   var app = {
     $home: $("#home"),
-    $login: $("#login-user"),
+    $loginUser: $("#login-user"),
     $newUser: $("#new-user"),
     $newPicture: $("#new-picture"),
     $userDiv: $("#userDiv"),
@@ -21,11 +21,16 @@ $(document).ready(function() {
     $uploadPicture: $("#upload-picture"),
     $logoutUser: $("#logout-user"),
     $welcome: $("#welcome"),
-    $heroImage: $("#hero-image")
-
+    $heroImage: $("#hero-image"),
+    $registerUser: $("#register-user"),
+    $login: $("#login"),
+    $newPicButton: $("#new-pic-button"),
+    $newUserButton: $("#new-user-button"),
+    $loginButton: $("#login-button")
   };
+
   app.$home.on("click", function(event) {
-    app.$login.hide();
+    app.$loginUser.hide();
     app.$newUser.hide();
     app.$newPicture.hide();
     app.$userDiv.hide();
@@ -36,50 +41,44 @@ $(document).ready(function() {
     app.$heroImage.show();
   })
 
-  $("#register-user").on("click", function(event) {
-    app.$login.hide();
+  app.$registerUser.on("click", function(event) {
+    app.$loginUser.hide();
     app.$newUser.show();
-    // $("#register-user").hide();
     app.$welcome.hide();
     app.$heroImage.hide();
 
   });
 
-  $("#login").on("click", function(event) {
-    app.$login.show();
-    // app.$newUser.hide();
-    $("#register-user").hide();
-    $("#login").hide();
-    // app.$uploadPicture.hide();
+  app.$login.on("click", function(event) {
+    app.$loginUser.show();
+    app.$registerUser.hide();
+    app.$login.hide();
     app.$welcome.hide();
     app.$heroImage.hide();
   });
 
   app.$uploadPicture.on("click", function(event) {
     app.$newPicture.show();
-    $("#new-pic-button").show();
-    // $("#register-user").hide();
-    // $("#login").hide();
-    // app.$uploadPicture.hide();
+    app.$newPicButton.show();
   });
 
-  $("new-pic-button").on("click", function(event) {
-    $("#new-pic-button").hide();
+  app.$NewPicButton.on("click", function(event) {
+    app.$newPicButton.hide();
     app.$newPicture.hide();
   })
 
   app.$logoutUser.on("click", function(event) {
-    app.$login.hide();
+    app.$loginUser.hide();
     app.$newUser.hide();
     app.$newPicture.hide();
     app.$userDiv.hide();
     app.$pictures.hide();
-    $("#new-pic-button").hide();
-    $("#register-user").show();
-    $("#login").show();
+    app.$newPicButton.hide();
+    app.$registerUser.show();
+    app.$login.show();
   })
 
-  $("#new-user-button").on("click", function(event) {
+  app.$newUserButton.on("click", function(event) {
     var newUser = {
       name: $("#new-user-name").val(),
       email: $("#new-user-email").val(),
@@ -106,7 +105,7 @@ $(document).ready(function() {
       });
   });
 
-  $("#login-button").on("click", function() {
+  app.$loginButton.on("click", function() {
     var username = $("#returning-username").val();
     var password = $("#returning-password").val();
     var params = {
@@ -206,7 +205,7 @@ $(document).ready(function() {
 
   // });
 
-  $("#new-pic-button").on("click", function(event) {
+  app.$newPicButton.on("click", function(event) {
     var fd = new FormData();
     fd.append('image', $("#new-pic")[0].files[0]);
     fd.append('comment', $("#new-pic-comment").val());
