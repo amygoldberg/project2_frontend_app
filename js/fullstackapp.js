@@ -11,56 +11,69 @@ $(document).ready(function() {
     getUserPictures();
   }
 
-  $("#home").on("click", function(event) {
-    $("#login-user").hide();
-    $("#new-user").hide();
-    $("#new-picture").hide();
-    $("#userDiv").hide();
-    $("#pictures").hide();
-    $("#upload-picture").hide();
-    $("#logout-user").hide();
-    $("#welcome").show();
-    $("#hero-image").show();
+  var app = {
+    $home: $("#home"),
+    $login: $("#login-user"),
+    $newUser: $("#new-user"),
+    $newPicture: $("#new-picture"),
+    $userDiv: $("#userDiv"),
+    $pictures: $("#pictures"),
+    $uploadPicture: $("#upload-picture"),
+    $logoutUser: $("#logout-user"),
+    $welcome: $("#welcome"),
+    $heroImage: $("#hero-image")
+
+  };
+  app.$home.on("click", function(event) {
+    app.$login.hide();
+    app.$newUser.hide();
+    app.$newPicture.hide();
+    app.$userDiv.hide();
+    app.$pictures.hide();
+    app.$uploadPicture.hide();
+    app.$logoutUser.hide();
+    app.$welcome.show();
+    app.$heroImage.show();
   })
 
   $("#register-user").on("click", function(event) {
-    $("#login-user").hide();
-    $("#new-user").show();
+    app.$login.hide();
+    app.$newUser.show();
     // $("#register-user").hide();
-    $("#welcome").hide();
-    $("#hero-image").hide();
+    app.$welcome.hide();
+    app.$heroImage.hide();
 
   });
 
   $("#login").on("click", function(event) {
-    $("#login-user").show();
-    // $("#new-user").hide();
+    app.$login.show();
+    // app.$newUser.hide();
     $("#register-user").hide();
     $("#login").hide();
-    // $("#upload-picture").hide();
-    $("#welcome").hide();
-    $("#hero-image").hide();
+    // app.$uploadPicture.hide();
+    app.$welcome.hide();
+    app.$heroImage.hide();
   });
 
-  $("#upload-picture").on("click", function(event) {
-    $("#new-picture").show();
+  app.$uploadPicture.on("click", function(event) {
+    app.$newPicture.show();
     $("#new-pic-button").show();
     // $("#register-user").hide();
     // $("#login").hide();
-    // $("#upload-picture").hide();
+    // app.$uploadPicture.hide();
   });
 
   $("new-pic-button").on("click", function(event) {
     $("#new-pic-button").hide();
-    $("#new-picture").hide();
+    app.$newPicture.hide();
   })
 
-  $("#logout-user").on("click", function(event) {
-    $("#login-user").hide();
-    $("#new-user").hide();
-    $("#new-picture").hide();
-    $("#userDiv").hide();
-    $("#pictures").hide();
+  app.$logoutUser.on("click", function(event) {
+    app.$login.hide();
+    app.$newUser.hide();
+    app.$newPicture.hide();
+    app.$userDiv.hide();
+    app.$pictures.hide();
     $("#new-pic-button").hide();
     $("#register-user").show();
     $("#login").show();
@@ -83,7 +96,7 @@ $(document).ready(function() {
       }
     })
       .done(function(data) {
-        $("#new-user").hide();
+        app.$newUser.hide();
 
         simpleStorage.set("token", data.token, {
           TTL: 43200000
@@ -109,7 +122,7 @@ $(document).ready(function() {
       data: params
     })
       .done(function(data) {
-        $("#login-user").hide();
+        app.$login.hide();
 
         simpleStorage.set("token", data.token, {
           TTL: 43200000
@@ -135,7 +148,7 @@ $(document).ready(function() {
   });
 
   // FROM COURTNEY
-  $("#logout-user").on("click", function() {
+  app.$logoutUser.on("click", function() {
     $.ajax({
       method: 'DELETE',
       url: baseURL() + '/logout',
@@ -216,8 +229,8 @@ $(document).ready(function() {
     })
       .done(function() {
         // console.log('Added picture');
-        $("#new-picture").hide();
-        $("#pictures").empty();
+        app.$newPicture.hide();
+        app.$pictures.empty();
         getUserPictures();
       })
       .fail(function(error, textStatus, errorThrown) {
@@ -229,7 +242,7 @@ $(document).ready(function() {
   });
 
   var renderUserData = function(data) {
-    $("#userDiv").html("welcome back, " + data.name);
+    app.$userDiv.html("welcome back, " + data.name);
   };
 
   function getUserPictures(userID) {
