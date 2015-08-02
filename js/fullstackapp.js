@@ -30,13 +30,13 @@ $(document).ready(function() {
   };
 
   app.$home.on("click", function(event) {
-    app.$loginUser.hide();
-    app.$newUser.hide();
-    app.$newPicture.hide();
-    app.$userDiv.hide();
-    app.$pictures.hide();
-    app.$uploadPicture.hide();
-    app.$logoutUser.hide();
+    // app.$loginUser.hide();
+    // app.$newUser.hide();
+    // app.$newPicture.hide();
+    // app.$userDiv.hide();
+    // app.$pictures.hide();
+    // app.$uploadPicture.hide();
+    // app.$logoutUser.hide();
     app.$welcome.show();
     app.$heroImage.show();
   })
@@ -60,14 +60,20 @@ $(document).ready(function() {
   app.$uploadPicture.on("click", function(event) {
     app.$newPicture.show();
     app.$newPicButton.show();
+    app.$pictures.hide();
+    app.$userDiv.show();
   });
 
-  app.$NewPicButton.on("click", function(event) {
+  app.$newPicButton.on("click", function(event) {
     app.$newPicButton.hide();
     app.$newPicture.hide();
+    // app.$pictures.show();
+    // app.$userDiv.show();
   })
 
   app.$logoutUser.on("click", function(event) {
+    app.$welcome.show();
+    app.$heroImage.show();
     app.$loginUser.hide();
     app.$newUser.hide();
     app.$newPicture.hide();
@@ -121,7 +127,7 @@ $(document).ready(function() {
       data: params
     })
       .done(function(data) {
-        app.$login.hide();
+        app.$loginUser.hide();
 
         simpleStorage.set("token", data.token, {
           TTL: 43200000
